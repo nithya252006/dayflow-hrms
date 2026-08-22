@@ -32,6 +32,7 @@ backend/uploads/*
 temp/
 tmp/
 .temp/
+*.zip
 
 # OS and Editor artifacts
 .DS_Store
