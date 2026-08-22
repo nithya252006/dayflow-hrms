@@ -1,0 +1,131 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --bg-primary: #060b19;
+    --bg-card: #0d1936;
+    --border-color: rgba(0, 240, 255, 0.14);
+    --text-primary: #f8fafc;
+    --text-muted: #7b8b9e;
+  }
+
+  .theme-slate {
+    --bg-primary: #151d30;
+    --bg-card: #1c2740;
+    --border-color: rgba(255, 255, 255, 0.1);
+    --text-primary: #f8fafc;
+    --text-muted: #94a3b8;
+  }
+
+  .theme-light {
+    --bg-primary: #f0f4fc;
+    --bg-card: #ffffff;
+    --border-color: rgba(0, 120, 255, 0.12);
+    --text-primary: #0f172a;
+    --text-muted: #64748b;
+  }
+
+  body {
+    font-family: 'Plus Jakarta Sans', 'Outfit', system-ui, -apple-system, sans-serif;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Outfit', sans-serif;
+    letter-spacing: -0.02em;
+  }
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(6, 11, 25, 0.6);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 240, 255, 0.2);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 240, 255, 0.4);
+}
+
+/* Luxury Glassmorphic Styles */
+.glass-card {
+  background: linear-gradient(180deg, rgba(13, 25, 54, 0.85) 0%, rgba(9, 17, 40, 0.95) 100%);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(0, 240, 255, 0.12);
+  box-shadow: 0 12px 36px 0 rgba(0, 0, 0, 0.4), inset 0 1px 0 0 rgba(255, 255, 255, 0.05);
+}
+
+.theme-slate .glass-card {
+  background: linear-gradient(180deg, rgba(28, 39, 64, 0.9) 0%, rgba(21, 29, 48, 0.95) 100%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 12px 36px 0 rgba(0, 0, 0, 0.35);
+}
+
+.theme-light .glass-card {
+  background: #ffffff;
+  border: 1px solid rgba(0, 100, 255, 0.08);
+  box-shadow: 0 10px 30px 0 rgba(0, 60, 160, 0.06);
+}
+
+.glow-cyan-border {
+  border: 1px solid rgba(0, 240, 255, 0.35);
+  box-shadow: 0 0 15px -3px rgba(0, 240, 255, 0.25);
+}
+
+.glow-pill-active {
+  background: linear-gradient(135deg, #00f0ff 0%, #0078ff 100%);
+  box-shadow: 0 0 18px rgba(0, 240, 255, 0.45);
+  color: #ffffff !important;
+}
+
+/* Background Ambient Lighting */
+.bg-ambient-glow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.bg-ambient-glow::before {
+  content: '';
+  position: absolute;
+  top: -150px;
+  right: -100px;
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(0, 120, 255, 0.15) 0%, rgba(0, 240, 255, 0.03) 60%, transparent 70%);
+  filter: blur(60px);
+}
+
+.bg-ambient-glow::after {
+  content: '';
+  position: absolute;
+  top: 30%;
+  left: -150px;
+  width: 450px;
+  height: 450px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(0, 240, 255, 0.12) 0%, rgba(0, 100, 255, 0.02) 60%, transparent 70%);
+  filter: blur(70px);
+}
