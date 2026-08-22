@@ -3,14 +3,24 @@ const mongoose = require('mongoose');
 let mongoServer = null;
 
 const connectDB = async () => {
-  const uri = process.env.MONGODB_URI || 'mongodb://localhost:27017/dayflow_hrms';
+  const uri = process.env.MONGODB_URI || 'mongodb+srv://dayflow_admin:DayflowPass123@cluster0.dayflow.mongodb.net/dayflow_hrms?retryWrites=true&w=majority';
 
   try {
-    // Attempt standard connection with 3 second timeout
-    const conn = await mongoose.connect(uri, {
-      serverSelectionTimeoutMS: 3000,
+    // Attempt standard / cloud connection
+    const conn = await mongoose.connect(process.env.MONGODB_URI || uri, {
+      serverSelectionTimeoutMS: 5000,
     });
     console.log(`✅ MongoDB Connected: ${conn.connection.host}`);
+
+    // Auto-seed if empty
+    const User = require('../models/User');
+    const userCount = await User.countDocuments();
+    if (userCount === 0) {
+      console.log('🌱 Database is empty, seeding initial workforce...');
+      const { seedDatabase } = require('../seeder/seedData');
+      await seedDatabase(true);
+    }
+
     return conn;
   } catch (primaryError) {
     console.warn(`⚠️ Could not connect to primary MongoDB at ${uri} (${primaryError.message}).`);
@@ -21,9 +31,10 @@ const connectDB = async () => {
       mongoServer = await MongoMemoryServer.create({
         instance: {
           dbName: 'dayflow_hrms',
+          port: 27017,
         },
         spawn: {
-          timeout: 60000, // allow sufficient time on first download
+          timeout: 120000,
         },
       });
       const memoryUri = mongoServer.getUri();
@@ -31,14 +42,13 @@ const connectDB = async () => {
       const conn = await mongoose.connect(memoryUri);
       console.log(`✅ Embedded In-Memory MongoDB connected at ${memoryUri}`);
 
-      // Auto-run seeder if running in memory fallback so database is rich with sample data
+      // Auto-run seeder
       const { seedDatabase } = require('../seeder/seedData');
       await seedDatabase(true);
 
       return conn;
     } catch (fallbackError) {
       console.error(`❌ Failed to connect to MongoDB: ${fallbackError.message}`);
-      process.exit(1);
     }
   }
 };
