@@ -3,12 +3,14 @@ const mongoose = require('mongoose');
 let mongoServer = null;
 
 const connectDB = async () => {
-  const uri = process.env.MONGODB_URI || 'mongodb+srv://dayflow_admin:DayflowPass123@cluster0.dayflow.mongodb.net/dayflow_hrms?retryWrites=true&w=majority';
+  const uri =
+    process.env.MONGODB_URI ||
+    'mongodb+srv://nithyashreeganesan2007_db_user:Z8kmOWQGMZriGuTR@cluster0.giun5zx.mongodb.net/dayflow_hrms?retryWrites=true&w=majority';
 
   try {
     // Attempt standard / cloud connection
-    const conn = await mongoose.connect(process.env.MONGODB_URI || uri, {
-      serverSelectionTimeoutMS: 5000,
+    const conn = await mongoose.connect(uri, {
+      serverSelectionTimeoutMS: 8000,
     });
     console.log(`✅ MongoDB Connected: ${conn.connection.host}`);
 
